@@ -1,0 +1,15 @@
+{
+  "name": "n-trie",
+  "version": "1.0.0",
+  "description": "N-Way Trie implementation in Node.js",
+  "repository":{
+  	"type": "git",
+  	"url": "https://github.com/bajrachar/n-trie.git"
+  },
+  "main": "./lib/trie.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bajrachar <ravi.bajracharya@wiseyak.com>",
+  "license": "MIT"
+}
