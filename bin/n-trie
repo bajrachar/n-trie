@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var fs = require('fs'),
+	path = require('path'),
+	readline = require('readline'),
+	args = process.argv.slice(2);
+var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
+var Trie = require(lib+'/trie.js').trie;
+
+// Create an empty trie
+var t = Trie(['']).create();
+var lineArr;
+
+if(args.length === 2)
+{
+	const rl = readline.createInterface({
+		input: fs.createReadStream(args[0])
+	});
+
+	rl.on('line', function(line){
+		console.log(line);
+		lineArr = line.split(';');
+		t.addWord(lineArr[1], 0, lineArr[0]);
+	});
+
+	rl.on('close', function(){
+		console.log('merging single char nodes');
+		t.mergeSingleChildNodes(t.root, 2);
+		fs.writeFile(args[1], JSON.stringify(t.root), 'utf-8');
+	});
+} else {
+	console.log('n-trie is a command line tool to create a trie structure json file from key-value pair data file delimited with ";"');
+	console.log('example: n-trie <input-file-path> <output-file-path>');
+}
