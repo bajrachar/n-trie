@@ -22,12 +22,20 @@ if(args.length === 2)
 	rl.on('line', function(line){
 		console.log(line);
 		lineArr = line.split(';');
-		t.addWord(lineArr[1], 0, lineArr[0]);
+
+		// Not the most efficient way to check if string is a 
+		// json object - Need to optimize this later.
+		try{
+			t.addWord(lineArr[1], 0, JSON.parse(lineArr[0]));
+		} catch(e) {
+			t.addWord(lineArr[1], 0, lineArr[0]);
+		}
+		
 	});
 
 	rl.on('close', function(){
-		console.log('merging single char nodes');
-		t.mergeSingleChildNodes(t.root, 2);
+		//console.log('merging single char nodes');
+		//t.mergeSingleChildNodes(t.root, 2);
 		fs.writeFile(args[1], JSON.stringify(t.root), 'utf-8');
 	});
 } else {
