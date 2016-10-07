@@ -13,10 +13,12 @@ var Trie = require(lib+'/trie.js').trie;
 var t = Trie(['']).create();
 var lineArr;
 
-if(args.length === 2)
-{
+if(args.length === 2 || args.length === 3)
+{	
+	var inputFile = fs.createReadStream(args[0]);
+
 	const rl = readline.createInterface({
-		input: fs.createReadStream(args[0])
+		input: inputFile
 	});
 
 	rl.on('line', function(line){
@@ -34,11 +36,27 @@ if(args.length === 2)
 	});
 
 	rl.on('close', function(){
-		//console.log('merging single char nodes');
-		//t.mergeSingleChildNodes(t.root, 2);
+		if(args.indexOf('-m') !== -1){
+			console.log('merging single char nodes');
+			t.mergeSingleChildNodes(t.root, 2);
+		}
+		
 		fs.writeFile(args[1], JSON.stringify(t.root), 'utf-8');
 	});
+
+	inputFile.on('error', function(err){
+		console.log('error opening file ' + args[0]);
+		console.log('Usage:');
+		printHelp();
+	});
+
 } else {
+	printHelp();
+}
+
+var printHelp = function(){
 	console.log('n-trie is a command line tool to create a trie structure json file from key-value pair data file delimited with ";"');
-	console.log('example: n-trie <input-file-path> <output-file-path>');
+	console.log('example: n-trie <input-file-path> <output-file-path> [:options]');
+	console.log('OPTIONS:');
+	console.log('-m : merge single child nodes');
 }
