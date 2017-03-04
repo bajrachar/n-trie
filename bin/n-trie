@@ -13,6 +13,13 @@ var Trie = require(lib+'/trie.js').trie;
 var t = Trie(['']).create();
 var lineArr;
 
+var printHelp = function(){
+	console.log('n-trie is a command line tool to create a trie structure json file from key-value pair data file delimited with ";"');
+	console.log('example: n-trie <input-file-path> <output-file-path> [:options]');
+	console.log('OPTIONS:');
+	console.log('-m : merge single child nodes');
+}
+
 if(args.length === 2 || args.length === 3)
 {	
 	var inputFile = fs.createReadStream(args[0]);
@@ -52,11 +59,4 @@ if(args.length === 2 || args.length === 3)
 
 } else {
 	printHelp();
-}
-
-var printHelp = function(){
-	console.log('n-trie is a command line tool to create a trie structure json file from key-value pair data file delimited with ";"');
-	console.log('example: n-trie <input-file-path> <output-file-path> [:options]');
-	console.log('OPTIONS:');
-	console.log('-m : merge single child nodes');
 }
