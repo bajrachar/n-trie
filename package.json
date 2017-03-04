@@ -1,6 +1,6 @@
 {
   "name": "n-trie",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "N-Way Trie implementation in Node.js",
   "repository":{
   	"type": "git",
